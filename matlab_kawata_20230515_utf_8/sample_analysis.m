@@ -5,10 +5,10 @@ Acl = A  + B2*K_opt;
 Ccl = C1 + D12*K_opt;
 
 % /////////////////////////////////////////////////////////////////////////
-% ‹É”z’ud—l‚ÌŠm”FFAcl = A + B2*K ‚ÌŒÅ—L’l
+% æ¥µé…ç½®ä»•æ§˜ã®ç¢ºèªï¼šAcl = A + B2*K ã®å›ºæœ‰å€¤
 % /////////////////////////////////////////////////////////////////////////
 % ---------------------------------------------------
-% ‰~—Ìˆæ‚Ì•`‰æ
+% å††é ˜åŸŸã®æç”»
 theta = 0:0.01:2*pi;
 x_circle = r*cos(theta) + c;
 y_circle = r*sin(theta);
@@ -16,7 +16,7 @@ figure(1);
 plot(x_circle,y_circle,'LineWidth',1.5)
 hold on
 % ---------------------------------------------------
-% A + B2*K ‚ÌŒÅ—L’l‚Ì•`‰æ
+% A + B2*K ã®å›ºæœ‰å€¤ã®æç”»
 eigen = eig(Acl)
 figure(1)
 plot(real(eigen),imag(eigen),'x','LineWidth',1.5,'MarkerSize',10)
@@ -30,15 +30,15 @@ xlabel('${\rm{Re}}[\lambda]$','FontSize',18,'Interpreter','latex')
 ylabel('${\rm{Im}}[\lambda]$','FontSize',18,'Interpreter','latex')
 
 % /////////////////////////////////////////////////////////////////////////
-% H-infinity §Œäd—l‚ÌŠm”F
+% H-infinity åˆ¶å¾¡ä»•æ§˜ã®ç¢ºèª
 % /////////////////////////////////////////////////////////////////////////
 % ---------------------------------------------------
-% Gzw(jw) ‚Ì“ÁˆÙ’l‚ÌŒvZ
+% Gzw(jw) ã®ç‰¹ç•°å€¤ã®è¨ˆç®—
 w   = logspace(-2,2,500);
 sys = ss(Acl,B1,Ccl,D11);
 sv  = sigma(sys,w);
 % ---------------------------------------------------
-% “ÁˆÙ’l‚Ì•`‰æ
+% ç‰¹ç•°å€¤ã®æç”»
 figure(2)
 semilogx(w,sv,[1e-2 1e2],gamma_opt*[1 1],'--','LineWidth',1.5)
 grid on
@@ -53,16 +53,16 @@ set(legend,'FontSize',18,'Interpreter','latex')
 % ---------------------------------------------------
 sys1 = ss(Acl,B1,-[Cp 0],1);    %%% sys1: w --> e
 sys2 = ss(Acl,B1,-[Cp 0],0);    %%% sys2: w --> theta1
-sv1 = sigma(sys1,w);            %%% sys1 ‚Ì“ÁˆÙ’l‚ÌŒvZ
-sv2 = sigma(sys2,w);            %%% sys2 ‚Ì“ÁˆÙ’l‚ÌŒvZ
+sv1 = sigma(sys1,w);            %%% sys1 ã®ç‰¹ç•°å€¤ã®è¨ˆç®—
+sv2 = sigma(sys2,w);            %%% sys2 ã®ç‰¹ç•°å€¤ã®è¨ˆç®—
 figure(3)
 semilogx(w,20*log10(sv1),w,20*log10(sv2),'LineWidth',1.5)
 hold on
 
 sys3 = gamma_opt*tf([1 0],bs);          %%% sys3: gamma/Ws(s)
 sys4 = gamma_opt*tf(1,[bt2 bt1 bt0]);   %%% sys4: gamma/Wt(s)
-sv3 = sigma(sys3,w);                    %%% sys3 ‚Ì“ÁˆÙ’l‚ÌŒvZ
-sv4 = sigma(sys4,w);                    %%% sys4 ‚Ì“ÁˆÙ’l‚ÌŒvZ
+sv3 = sigma(sys3,w);                    %%% sys3 ã®ç‰¹ç•°å€¤ã®è¨ˆç®—
+sv4 = sigma(sys4,w);                    %%% sys4 ã®ç‰¹ç•°å€¤ã®è¨ˆç®—
 figure(3)
 semilogx(w,20*log10(sv3),'--',w,20*log10(sv4),'--','LineWidth',1.5)
 hold off

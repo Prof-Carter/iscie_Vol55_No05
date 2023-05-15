@@ -1,35 +1,35 @@
 % sample_yalmip_mosek.m
 % last modified: 2023/05/15 by Masakatsu KAWATA
 
-plant                                           % ƒAƒNƒƒ{ƒbƒg‚É‘Î‚µ‚ÄƒVƒXƒeƒ€s—ñ‚È‚Ç‚ğ’è‹`‚µ‚½ M ƒtƒ@ƒCƒ‹‚ÌÀs
+plant                                           % ã‚¢ã‚¯ãƒ­ãƒœãƒƒãƒˆã«å¯¾ã—ã¦ã‚·ã‚¹ãƒ†ãƒ è¡Œåˆ—ãªã©ã‚’å®šç¾©ã—ãŸ M ãƒ•ã‚¡ã‚¤ãƒ«ã®å®Ÿè¡Œ
 % -------------------------------------------
-gamma = sdpvar(1,1);                            % Œˆ’è•Ï” gammaiƒKƒ“ƒ}jFƒXƒJƒ‰
-X     = sdpvar(n,n,'sy');                       % Œˆ’è•Ï” XFn~n ‚Ì‘ÎÌs—ñ
-Z     = sdpvar(n,m,'f');                        % Œˆ’è•Ï” ZFn~m ‚Ì’·•ûs—ñ
+gamma = sdpvar(1,1);                            % æ±ºå®šå¤‰æ•° gammaï¼ˆã‚¬ãƒ³ãƒï¼‰ï¼šã‚¹ã‚«ãƒ©
+X     = sdpvar(n,n,'sy');                       % æ±ºå®šå¤‰æ•° Xï¼šnÃ—n ã®å¯¾ç§°è¡Œåˆ—
+Z     = sdpvar(n,m,'f');                        % æ±ºå®šå¤‰æ•° Zï¼šnÃ—m ã®é•·æ–¹è¡Œåˆ—
 % -------------------------------------------
-ep = 1e-5;                                      % \•ª¬‚³‚È³” <=== ‰Á•M
+ep = 1e-5;                                      % ååˆ†å°ã•ãªæ­£æ•° <=== åŠ ç­†
 % -------------------------------------------
-LMI = [];                                       % LMI ‚Ì‹Lq‚Ì‰Šú‰»
+LMI = [];                                       % LMI ã®è¨˜è¿°ã®åˆæœŸåŒ–
 % -------------------------------------------
 AX = A*X + B2*Z';
 CX = C1*X + D12*Z';
 % -------------------------------------------
 M1 = [ r*X      AX-c*X
        AX'-c*X  r*X    ];
-LMI = [LMI, M1 >= eps*eye(length(M1))];         % M1 † eps*I (> 0)
+LMI = [LMI, M1 >= eps*eye(length(M1))];         % M1 â‰§ eps*I (> 0)
 % -------------------------------------------
 M2 = [ AX+AX' B1            CX'
        B1'   -gamma*eye(q)  D11'
        CX     D11          -gamma*eye(p) ];
-LMI = [LMI, M2 <= -eps*eye(length(M2))];        % M2 … -eps*I (< 0)
+LMI = [LMI, M2 <= -eps*eye(length(M2))];        % M2 â‰¦ -eps*I (< 0)
 % -------------------------------------------
-opt = sdpsettings; opt.solver = 'mosek';        % ƒ\ƒ‹ƒo‚Æ‚µ‚Ä MOSEK ‚ğ—˜—p
-optimize(LMI,gamma,opt)                         % –Ú“IŠÖ”‚ğ E = gamma ‚Æ‚µ‚½“ÊÅ“K‰»–â‘è‚ğ‰ğ‚­
-%%% ‚à‚µ‚­‚Íã 2 s‚Ì‘ã‚í‚è‚É
+opt = sdpsettings; opt.solver = 'mosek';        % ã‚½ãƒ«ãƒã¨ã—ã¦ MOSEK ã‚’åˆ©ç”¨
+optimize(LMI,gamma,opt)                         % ç›®çš„é–¢æ•°ã‚’ E = gamma ã¨ã—ãŸå‡¸æœ€é©åŒ–å•é¡Œã‚’è§£ã
+%%% ã‚‚ã—ãã¯ä¸Š 2 è¡Œã®ä»£ã‚ã‚Šã«
 %%% optimize(LMI,gamma,sdpsettings('solver','mosek')) 
 % -------------------------------------------
-gamma_opt = value(gamma)                        % “¾‚ç‚ê‚½ gamma ‚ÌÅ“K‰ğ gamma_opt
-X_opt = value(X)                                % “¾‚ç‚ê‚½ X ‚ÌÅ“K‰ğ X_opt
-Z_opt = value(Z)                                % “¾‚ç‚ê‚½ Z ‚ÌÅ“K‰ğ Z_opt
+gamma_opt = value(gamma)                        % å¾—ã‚‰ã‚ŒãŸ gamma ã®æœ€é©è§£ gamma_opt
+X_opt = value(X)                                % å¾—ã‚‰ã‚ŒãŸ X ã®æœ€é©è§£ X_opt
+Z_opt = value(Z)                                % å¾—ã‚‰ã‚ŒãŸ Z ã®æœ€é©è§£ Z_opt
 % -------------------------------------------
-K_opt = Z_opt'*inv(X_opt)                       % ƒRƒ“ƒgƒ[ƒ‰ƒQƒCƒ“ K_opt
+K_opt = Z_opt'*inv(X_opt)                       % ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã‚²ã‚¤ãƒ³ K_opt

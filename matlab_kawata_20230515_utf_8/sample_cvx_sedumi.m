@@ -1,16 +1,16 @@
 % sample_cvx_sedumi.m
 % last modified: 2023/05/15 by Masakatsu KAWATA
 
-plant                                           % ƒAƒNƒƒ{ƒbƒg‚É‘Î‚µ‚ÄƒVƒXƒeƒ€s—ñ‚È‚Ç‚ğ’è‹`‚µ‚½ M ƒtƒ@ƒCƒ‹‚ÌÀs
+plant                                           % ã‚¢ã‚¯ãƒ­ãƒœãƒƒãƒˆã«å¯¾ã—ã¦ã‚·ã‚¹ãƒ†ãƒ è¡Œåˆ—ãªã©ã‚’å®šç¾©ã—ãŸ M ãƒ•ã‚¡ã‚¤ãƒ«ã®å®Ÿè¡Œ
 % -------------------------------------------
-cvx_solver('sedumi');                           % ƒ\ƒ‹ƒo‚Æ‚µ‚Ä SeDuMi ‚ğg—p
+cvx_solver('sedumi');                           % ã‚½ãƒ«ãƒã¨ã—ã¦ SeDuMi ã‚’ä½¿ç”¨
 % -------------------------------------------
-cvx_begin sdp                                   % SDPi”¼³’è’lŒv‰æ–â‘èGLMI ‚ğ§–ñ‚Æ‚µ‚½“ÊÅ“K‰»–â‘èj‚ÌŠJn
-    variable gamma(1,1)                         % Œˆ’è•Ï” gammaiƒKƒ“ƒ}jFƒXƒJƒ‰
-    variable X(n,n) symmetric                   % Œˆ’è•Ï” XFn~n ‚Ì‘ÎÌs—ñ
-    variable Z(n,m)                             % Œˆ’è•Ï” ZFn~m ‚Ì’·•ûs—ñ
+cvx_begin sdp                                   % SDPï¼ˆåŠæ­£å®šå€¤è¨ˆç”»å•é¡Œï¼›LMI ã‚’åˆ¶ç´„ã¨ã—ãŸå‡¸æœ€é©åŒ–å•é¡Œï¼‰ã®é–‹å§‹
+    variable gamma(1,1)                         % æ±ºå®šå¤‰æ•° gammaï¼ˆã‚¬ãƒ³ãƒï¼‰ï¼šã‚¹ã‚«ãƒ©
+    variable X(n,n) symmetric                   % æ±ºå®šå¤‰æ•° Xï¼šnÃ—n ã®å¯¾ç§°è¡Œåˆ—
+    variable Z(n,m)                             % æ±ºå®šå¤‰æ•° Zï¼šnÃ—m ã®é•·æ–¹è¡Œåˆ—
     % ---------------------------------------
-    minimize(gamma)                             % –Ú“IŠÖ” E = gamma ‚ğÅ¬‰»‚·‚é‚±‚Æ‚ğéŒ¾
+    minimize(gamma)                             % ç›®çš„é–¢æ•° E = gamma ã‚’æœ€å°åŒ–ã™ã‚‹ã“ã¨ã‚’å®£è¨€
     % ---------------------------------------
     AX = A*X + B2*Z'; 
     CX = C1*X + D12*Z'; 
@@ -23,6 +23,6 @@ cvx_begin sdp                                   % SDPi”¼³’è’lŒv‰æ–â‘èGLMI ‚ğ
            B1'   -gamma*eye(q)  D11'
            CX     D11          -gamma*eye(p) ];
     M2 < 0;                                     % M2 < 0
-cvx_end                                         % SDP ‚ÌI—¹
+cvx_end                                         % SDP ã®çµ‚äº†
 % -------------------------------------------
-K = Z'*inv(X)                                   % ƒRƒ“ƒgƒ[ƒ‰ƒQƒCƒ“ K
+K = Z'*inv(X)                                   % ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã‚²ã‚¤ãƒ³ K
